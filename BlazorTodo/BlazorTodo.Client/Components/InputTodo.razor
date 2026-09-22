@@ -2,7 +2,6 @@
     <div class="card-body">
         <div class="input-group input-group-lg">
             <input @bind = "_input"
-                   @bind:event="oninput"
                    type="text"
                    class="form-control"
                    placeholder="Add todo..."
@@ -27,12 +26,13 @@
 @code {
     private string _input = string.Empty;
 
-    private void AddTodo(MouseEventArgs args)
-    {
-        //var x = args.ScreenX;
-        if (string.IsNullOrWhiteSpace(_input)) return;
+    [Parameter]
+    public EventCallback<string> OnAdd { get; set; }
 
-        //...Add new Todo to list in parent
+    private async Task AddTodo()
+    {
+        if (OnAdd.HasDelegate)
+            await OnAdd.InvokeAsync(_input);
 
         _input = string.Empty;
 

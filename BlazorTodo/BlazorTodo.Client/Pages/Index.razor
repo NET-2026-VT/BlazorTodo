@@ -2,7 +2,7 @@
 
 <PageTitle>ToDo</PageTitle>
 
-<InputTodo />
+<InputTodo OnAdd="AddTodo" />
 
 <Items TodoItems="_todoItems" />
 
@@ -18,6 +18,13 @@
                   new(){Text = "Walk the dog"},
                   new(){Text = "Coffe",  Created = DateTime.Now.AddDays(-1).AddHours(5)},
              ];
+    }
+
+    private void AddTodo(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return;
+
+        _todoItems.Add(new TodoItem { Text = text.Trim() });
     }
 
 }

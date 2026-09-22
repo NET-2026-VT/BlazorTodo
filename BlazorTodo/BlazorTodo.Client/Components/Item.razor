@@ -1,10 +1,10 @@
 ﻿<li class="list-group-item d-flex align-items-center justify-content-between py-3"
     data-id="1">
     <div class="d-flex align-items-center gap-3">
-        <input class="form-check-input m-0" type="checkbox">
+        <input class="form-check-input m-0" type="checkbox" checked="@TodoItem.Completed">
         <div>
-            <div class="fw-medium">Buy milk</div>
-            <div class="small text-secondary">Created: 2026-03-04</div>
+            <div class="fw-medium @(TodoItem.Completed ? "text-decoration-line-through" : "")">@TodoItem.Text</div>
+            <div class="small text-secondary">Created: @TodoItem.Created</div>
         </div>
     </div>
 
@@ -14,5 +14,8 @@
 </li>
 
 @code {
+
+    [Parameter]
+    public TodoItem TodoItem { get; set; } = null!;//new() { Text = "" };
 
 }

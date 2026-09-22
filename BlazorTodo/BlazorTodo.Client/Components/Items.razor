@@ -1,9 +1,19 @@
 ﻿<ul class="list-group mt-4">
   
-
+    @foreach(var item in _items)
+    {
+        <Item @key="item.Id" TodoItem="item"/>
+    }
 
 </ul>
 
 @code {
+
+    private List<TodoItem> _items =
+       [
+            new(){Text = "Buy bananas", Completed = true, Created = DateTime.Now.AddDays(-2)},
+            new(){Text = "Walk the dog"},
+            new(){Text = "Coffe",  Created = DateTime.Now.AddDays(-1).AddHours(5)},
+        ];
 
 }

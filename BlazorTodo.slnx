@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BlazorTodo/BlazorTodo.Client/BlazorTodo.Client.csproj" />
+  <Project Path="BlazorTodo/BlazorTodo/BlazorTodo.csproj" />
+</Solution>

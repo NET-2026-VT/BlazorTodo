@@ -4,8 +4,17 @@
             @NavTitle
         </span>
     </div>
+
+    @if (ChildContent is not null)
+    {
+        <div class="d-flex gap-2">
+            @ChildContent
+        </div>
+    }
+
 </nav>
 
 @* @code {
-
+    [Parameter]
+    public string NavTitle { get; set; } = "Default NavBar Title";
 } *@

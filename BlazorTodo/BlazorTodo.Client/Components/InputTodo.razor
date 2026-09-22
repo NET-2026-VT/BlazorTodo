@@ -1,13 +1,17 @@
 ﻿<div class="card shadow-sm mb-4">
     <div class="card-body">
         <div class="input-group input-group-lg">
-            <input type="text"
+            <input @bind = "_input"
+                   @bind:event="oninput"
+                   type="text"
                    class="form-control"
                    placeholder="Add todo..."
                    autofocus>
 
             <button type="button"
-                    class="btn btn-primary">
+                    class="btn btn-primary"
+                    @onclick="AddTodo">
+                    
                 Add
             </button>
         </div>
@@ -18,6 +22,19 @@
     </div>
 </div>
 
-@code {
+<h4>@_input</h4>
 
+@code {
+    private string _input = string.Empty;
+
+    private void AddTodo(MouseEventArgs args)
+    {
+        //var x = args.ScreenX;
+        if (string.IsNullOrWhiteSpace(_input)) return;
+
+        //...Add new Todo to list in parent
+
+        _input = string.Empty;
+
+    }
 }

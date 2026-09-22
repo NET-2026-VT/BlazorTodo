@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <button class="btn btn-outline-danger btn-sm" type="button">
+    <button class="btn btn-outline-danger btn-sm" type="button" @onclick="Delete">
         Delete
     </button>
 </li>
@@ -18,4 +18,13 @@
     [Parameter]
     public TodoItem TodoItem { get; set; } = null!;//new() { Text = "" };
 
+    [Parameter]
+    public EventCallback<Guid> OnDelete { get; set; }
+
+
+    private async Task Delete()
+    {
+        if (OnDelete.HasDelegate)
+            await OnDelete.InvokeAsync(TodoItem.Id);
+    }
 }

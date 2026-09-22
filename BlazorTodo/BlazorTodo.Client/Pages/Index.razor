@@ -4,7 +4,7 @@
 
 <InputTodo OnAdd="AddTodo" />
 
-<Items TodoItems="_todoItems" />
+<Items TodoItems="_todoItems" OnDelete="DeleteTodo" />
 
 @code {
 
@@ -25,6 +25,15 @@
         if (string.IsNullOrWhiteSpace(text)) return;
 
         _todoItems.Add(new TodoItem { Text = text.Trim() });
+    }
+
+    private void DeleteTodo(Guid id)
+    {
+        var item = _todoItems.FirstOrDefault(i => i.Id == id);
+
+        if (item == null) return;
+
+        _todoItems.Remove(item);
     }
 
 }

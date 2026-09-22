@@ -18,7 +18,7 @@
     [Parameter]
     public TodoItem TodoItem { get; set; } = null!;//new() { Text = "" };
 
-    [Parameter]
+    [CascadingParameter(Name = "Delete")]
     public EventCallback<Guid> OnDelete { get; set; }
 
 

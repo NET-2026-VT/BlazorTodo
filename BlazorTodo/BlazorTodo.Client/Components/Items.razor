@@ -2,7 +2,7 @@
   
     @foreach(var item in TodoItems)
     {
-        <Item @key="item.Id" TodoItem="item" OnDelete="OnDelete"/>
+        <Item @key="item.Id" TodoItem="item" />
     }
 
 </ul>
@@ -11,8 +11,5 @@
 
     [Parameter]
     public List<TodoItem> TodoItems { get; set; } = [];
-
-    [Parameter]
-    public EventCallback<Guid> OnDelete { get; set; }
 
 }

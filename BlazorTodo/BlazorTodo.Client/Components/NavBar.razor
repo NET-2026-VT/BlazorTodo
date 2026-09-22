@@ -5,16 +5,19 @@
         </span>
     </div>
 
-    @if (ChildContent is not null)
+    @if (RightContent is not null)
     {
         <div class="d-flex gap-2">
-            @ChildContent
+            @RightContent
         </div>
     }
 
 </nav>
 
-@* @code {
+@code {
     [Parameter]
     public string NavTitle { get; set; } = "Default NavBar Title";
-} *@
+
+    [Parameter]
+    public RenderFragment? RightContent { get; set; }
+}

@@ -25,7 +25,7 @@
     public RenderFragment? RightContent { get; set; }
 
     [Inject]
-    public TodoState State { get; set; } = null!;
+    public ITodoState State { get; set; } = null!;
 
     protected override void OnInitialized() => State.Onchange += StateHasChanged;
 

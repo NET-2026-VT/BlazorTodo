@@ -1,6 +1,6 @@
 ﻿namespace BlazorTodo.Client.Components;
 
-public class TodoState
+public class TodoState : ITodoState
 {
     public int Count { get; private set; }
 

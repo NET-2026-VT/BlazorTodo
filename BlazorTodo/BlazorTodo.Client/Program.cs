@@ -10,7 +10,7 @@ internal class Program
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
         //Add to DI
-        builder.Services.AddScoped<TodoState>();
+        builder.Services.AddScoped<ITodoState, TodoState>();
 
         await builder.Build().RunAsync();
     }

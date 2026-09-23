@@ -16,7 +16,7 @@ public class Program
 
         //...
         //...
-       // builder.Services.AddScoped<TodoState>();
+        builder.Services.AddScoped<ITodoState, NoopTodoState>();
 
         var app = builder.Build();
 

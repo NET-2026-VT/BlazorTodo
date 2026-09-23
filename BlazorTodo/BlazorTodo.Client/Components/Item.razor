@@ -18,22 +18,26 @@
     [Parameter]
     public TodoItem TodoItem { get; set; } = null!;//new() { Text = "" };
 
-    [CascadingParameter(Name = "Delete")]
-    public EventCallback<Guid> OnDelete { get; set; }
-   
-    [CascadingParameter(Name = "Complete")]
-    public EventCallback<Guid> OnComplete { get; set; }
+    // [CascadingParameter(Name = "Delete")]
+    // public EventCallback<Guid> OnDelete { get; set; }
+
+    // [CascadingParameter(Name = "Complete")]
+    // public EventCallback<Guid> OnComplete { get; set; }
 
 
-    private async Task Delete()
+    [CascadingParameter]
+    public TodoActions Actions { get; set; } = null!;
+
+
+        private async Task Delete()
     {
-        if (OnDelete.HasDelegate)
-            await OnDelete.InvokeAsync(TodoItem.Id);
+        if (Actions.OnDelete.HasDelegate)
+            await Actions.OnDelete.InvokeAsync(TodoItem.Id);
     }
 
     private async Task Complete()
     {
-        if (OnComplete.HasDelegate)
-            await OnComplete.InvokeAsync(TodoItem.Id);
+        if (Actions.OnComplete.HasDelegate)
+            await Actions.OnComplete.InvokeAsync(TodoItem.Id);
     }
 }

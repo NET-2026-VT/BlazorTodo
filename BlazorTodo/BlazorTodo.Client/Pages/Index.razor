@@ -2,21 +2,10 @@
 
 <PageTitle>ToDo</PageTitle>
 
-<InputTodo OnAdd="AddTodo" />
+<InputTodo OnAdd="AddTodo"/>
 
-<CascadingValue 
-    TValue="EventCallback<Guid>" 
-    Name="Delete" 
-    Value="EventCallback.Factory.Create<Guid>(this, DeleteTodo)">
-
-    <CascadingValue 
-        TValue="EventCallback<Guid>"
-        Name="Complete"
-        Value="EventCallback.Factory.Create<Guid>(this, CompleteTodo)">
-
+<CascadingValue Value="_actions"> 
          <Items TodoItems="_todoItems"/>
-
-         </CascadingValue>
 </CascadingValue>
 
 @code {
@@ -37,7 +26,7 @@
         _actions = new TodoActions
             {
                 OnDelete = EventCallback.Factory.Create<Guid>(this, DeleteTodo),
-                OnComplette = EventCallback.Factory.Create<Guid>(this, CompleteTodo)
+                OnComplete = EventCallback.Factory.Create<Guid>(this, CompleteTodo)
             };
     }
 
@@ -55,6 +44,7 @@
         if (item == null) return;
 
         _todoItems.Remove(item);
+
     }
 
     private void CompleteTodo(Guid id)

@@ -4,16 +4,17 @@
 
 <InputTodo OnAdd="AddTodo" />
 
-<CascadingValue TValue="EventCallback<Guid>" Name="Delete" Value="DeleteCallBack">
-    <Items TodoItems="_todoItems"/>
+<CascadingValue 
+    TValue="EventCallback<Guid>" 
+    Name="Delete" 
+    Value="EventCallback.Factory.Create<Guid>(this, DeleteTodo)">
+         <Items TodoItems="_todoItems"/>
 </CascadingValue>
 
 @code {
 
     private List<TodoItem> _todoItems = null!;
-    private EventCallback<Guid> DeleteCallBack => EventCallback.Factory.Create<Guid>(this, DeleteTodo);
-
-
+  
     protected override void OnInitialized()
     {
         _todoItems =

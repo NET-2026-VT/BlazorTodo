@@ -1,7 +1,7 @@
 ﻿<li class="list-group-item d-flex align-items-center justify-content-between py-3"
     data-id="@TodoItem.Id">
     <div class="d-flex align-items-center gap-3">
-        <input class="form-check-input m-0" type="checkbox" checked="@TodoItem.Completed">
+        <input class="form-check-input m-0" type="checkbox" checked="@TodoItem.Completed" @onchange="Complete">
         <div>
             <div class="fw-medium @(TodoItem.Completed ? "text-decoration-line-through" : "")">@TodoItem.Text</div>
             <div class="small text-secondary">Created: @TodoItem.Created</div>
@@ -20,11 +20,20 @@
 
     [CascadingParameter(Name = "Delete")]
     public EventCallback<Guid> OnDelete { get; set; }
+   
+    [CascadingParameter(Name = "Complete")]
+    public EventCallback<Guid> OnComplete { get; set; }
 
 
     private async Task Delete()
     {
         if (OnDelete.HasDelegate)
             await OnDelete.InvokeAsync(TodoItem.Id);
+    }
+
+    private async Task Complete()
+    {
+        if (OnComplete.HasDelegate)
+            await OnComplete.InvokeAsync(TodoItem.Id);
     }
 }

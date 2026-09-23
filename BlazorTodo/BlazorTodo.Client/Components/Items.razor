@@ -1,4 +1,8 @@
-﻿<ul class="list-group mt-4">
+﻿@inject ITodoState state
+
+<h4>Total todos: @state.Count</h4>
+
+<ul class="list-group mt-4">
   
     @foreach(var item in TodoItems)
     {

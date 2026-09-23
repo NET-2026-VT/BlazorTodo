@@ -1,14 +1,14 @@
 ﻿<li class="list-group-item d-flex align-items-center justify-content-between py-3"
     data-id="@TodoItem.Id">
     <div class="d-flex align-items-center gap-3">
-        <input class="form-check-input m-0" type="checkbox" checked="@TodoItem.Completed" @onchange="Complete">
+        <input class="form-check-input m-0" type="checkbox" checked="@TodoItem.Completed" @onchange="() => InvokeActionAsync(Actions.OnComplete)">
         <div>
             <div class="fw-medium @(TodoItem.Completed ? "text-decoration-line-through" : "")">@TodoItem.Text</div>
             <div class="small text-secondary">Created: @TodoItem.Created</div>
         </div>
     </div>
 
-    <button class="btn btn-outline-danger btn-sm" type="button" @onclick="Delete">
+    <button class="btn btn-outline-danger btn-sm" type="button" @onclick="() => InvokeActionAsync(Actions.OnDelete)">
         Delete
     </button>
 </li>
@@ -29,15 +29,10 @@
     public TodoActions Actions { get; set; } = null!;
 
 
-        private async Task Delete()
+    private async Task InvokeActionAsync(EventCallback<Guid> callback)
     {
-        if (Actions.OnDelete.HasDelegate)
-            await Actions.OnDelete.InvokeAsync(TodoItem.Id);
+        if (callback.HasDelegate)
+            await callback.InvokeAsync(TodoItem.Id);
     }
 
-    private async Task Complete()
-    {
-        if (Actions.OnComplete.HasDelegate)
-            await Actions.OnComplete.InvokeAsync(TodoItem.Id);
-    }
 }

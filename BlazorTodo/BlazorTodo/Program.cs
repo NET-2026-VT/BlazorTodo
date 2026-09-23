@@ -1,5 +1,6 @@
 using BlazorTodo.Client.Components;
 using BlazorTodo.Client.Pages;
+using BlazorTodo.Client.Services;
 using BlazorTodo.Components;
 
 namespace BlazorTodo;
@@ -17,6 +18,7 @@ public class Program
         //...
         //...
         builder.Services.AddScoped<ITodoState, NoopTodoState>();
+        builder.Services.AddScoped<ITodoService, InMemoryTodoService>();
 
         var app = builder.Build();
 

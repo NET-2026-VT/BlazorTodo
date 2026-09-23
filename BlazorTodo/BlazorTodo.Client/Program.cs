@@ -1,4 +1,5 @@
 using BlazorTodo.Client.Components;
+using BlazorTodo.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace BlazorTodo.Client;
@@ -11,6 +12,7 @@ internal class Program
 
         //Add to DI
         builder.Services.AddScoped<ITodoState, TodoState>();
+        builder.Services.AddScoped<ITodoService, InMemoryTodoService>();
 
         await builder.Build().RunAsync();
     }

@@ -11,21 +11,19 @@
 
 @code {
 
-    private List<TodoItem> _todoItems = null!;
+    private IReadOnlyList<TodoItem> _todoItems = null!;
 
     private TodoActions _actions = null!;
 
     [Inject]
     public ITodoState State { get; set; } = null!;
 
+    [Inject]
+    public ITodoService TodoService { get; set; } = null!;
+
     protected override void OnInitialized()
     {
-        _todoItems =
-             [
-                  new(){Text = "Buy bananas", Completed = true, Created = DateTime.Now.AddDays(-2)},
-                  new(){Text = "Walk the dog"},
-                  new(){Text = "Coffe",  Created = DateTime.Now.AddDays(-1).AddHours(5)},
-     ];
+        _todoItems = TodoService.GetAll();
 
         UpdateCount();
 
@@ -38,20 +36,14 @@
 
     private void AddTodo(string text)
     {
-        if (string.IsNullOrWhiteSpace(text)) return;
-
-        _todoItems.Add(new TodoItem { Text = text.Trim() });
+        TodoService.Add(text);
 
         UpdateCount();
     }
 
     private void DeleteTodo(Guid id)
     {
-        var item = _todoItems.FirstOrDefault(i => i.Id == id);
-
-        if (item == null) return;
-
-        _todoItems.Remove(item);
+        TodoService.Delete(id);
 
         UpdateCount();
 
@@ -59,11 +51,7 @@
 
     private void CompleteTodo(Guid id)
     {
-        var item = _todoItems.FirstOrDefault(i => i.Id == id);
-
-        if (item == null) return;
-
-        item.Completed = !item.Completed;
+        TodoService.ToggleComplete(id);
     }
 
     private void UpdateCount() => State.SetCount(_todoItems.Count);

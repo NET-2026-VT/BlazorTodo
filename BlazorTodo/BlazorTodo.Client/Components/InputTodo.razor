@@ -1,31 +1,36 @@
 ﻿<div class="card shadow-sm mb-4">
     <div class="card-body">
-        <form @onsubmit="AddTodo">
+        <EditForm Model="model" OnValidSubmit="AddTodo">
+            <DataAnnotationsValidator/>
+            <ValidationSummary />
             <div class="input-group input-group-lg">
-                <input @bind="_input"
+                <input @bind="model.Text"
                        type="text"
                        class="form-control"
                        placeholder="Add todo..."
                        autofocus>
 
                 <button type="submit"
-                        class="btn btn-primary"
-                        @onclick="AddTodo">
+                        class="btn btn-primary">
                     Add
                 </button>
             </div>
 
+            <div class="mt-2">
+                <ValidationMessage For="(() => model.Text)" />
+            </div>
+
+        </EditForm>
+
             <div class="form-text mt-2">
                 Write something and click Add.
             </div>
-        </form>
     </div>
 </div>
 
-<h4>@_input</h4>
 
 @code {
-    private string _input = string.Empty;
+    private AddTodoItem model = new();
 
     [Parameter]
     public EventCallback<string> OnAdd { get; set; }
@@ -33,9 +38,9 @@
     private async Task AddTodo()
     {
         if (OnAdd.HasDelegate)
-            await OnAdd.InvokeAsync(_input);
+            await OnAdd.InvokeAsync(model.Text);
 
-        _input = string.Empty;
+        model.Text = string.Empty;
 
     }
 }

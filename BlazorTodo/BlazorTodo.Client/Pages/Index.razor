@@ -1,8 +1,9 @@
 ﻿@page "/"
 
-<PageTitle>ToDo</PageTitle>
 
-<InputTodo OnAdd="AddTodo"/>
+<PageTitle>ToDo</PageTitle >
+
+<InputTodo OnAdd="AddTodo" />
 
 <CascadingValue Value="_actions"> 
          <Items TodoItems="_todoItems"/>
@@ -14,6 +15,9 @@
 
     private TodoActions _actions = null!;
 
+    [Inject]
+    public TodoState State { get; set; } = null!;
+
     protected override void OnInitialized()
     {
         _todoItems =
@@ -22,6 +26,8 @@
                   new(){Text = "Walk the dog"},
                   new(){Text = "Coffe",  Created = DateTime.Now.AddDays(-1).AddHours(5)},
      ];
+
+        UpdateCount();
 
         _actions = new TodoActions
             {
@@ -35,6 +41,8 @@
         if (string.IsNullOrWhiteSpace(text)) return;
 
         _todoItems.Add(new TodoItem { Text = text.Trim() });
+
+        UpdateCount();
     }
 
     private void DeleteTodo(Guid id)
@@ -44,6 +52,8 @@
         if (item == null) return;
 
         _todoItems.Remove(item);
+
+        UpdateCount();
 
     }
 
@@ -55,5 +65,7 @@
 
         item.Completed = !item.Completed;
     }
+
+    private void UpdateCount() => State.SetCount(_todoItems.Count);
 
 }

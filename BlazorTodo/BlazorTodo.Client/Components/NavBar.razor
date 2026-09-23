@@ -1,4 +1,6 @@
-﻿<nav class="navbar bg-body border-bottom">
+﻿@implements IDisposable
+
+<nav class="navbar bg-body border-bottom">
     <div class="container">
         <span class="navbar-brand fw-semibold">
             @NavTitle
@@ -8,6 +10,7 @@
     {
         <div class="d-flex gap-2">
             @RightContent
+            <span>@State.Count</span>
         </div>
     }
 
@@ -20,4 +23,12 @@
 
     [Parameter]
     public RenderFragment? RightContent { get; set; }
+
+    [Inject]
+    public TodoState State { get; set; } = null!;
+
+    protected override void OnInitialized() => State.Onchange += StateHasChanged;
+
+    public void Dispose() => State.Onchange -= StateHasChanged;
+    
 }

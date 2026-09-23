@@ -1,3 +1,4 @@
+using BlazorTodo.Client.Components;
 using BlazorTodo.Client.Pages;
 using BlazorTodo.Components;
 
@@ -15,6 +16,7 @@ public class Program
 
         //...
         //...
+       // builder.Services.AddScoped<TodoState>();
 
         var app = builder.Build();
 

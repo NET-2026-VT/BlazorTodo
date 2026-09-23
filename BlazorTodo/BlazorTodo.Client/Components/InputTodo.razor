@@ -1,14 +1,12 @@
 ﻿<div class="card shadow-sm mb-4">
     <div class="card-body">
-        <EditForm Model="model" OnValidSubmit="AddTodo">
+        <EditForm Model="model" OnValidSubmit="AddTodo" Context="_context">
             <DataAnnotationsValidator/>
-            <ValidationSummary />
             <div class="input-group input-group-lg">
-                <input @bind="model.Text"
-                       type="text"
+                <InputText @bind-Value="model.Text"
                        class="form-control"
                        placeholder="Add todo..."
-                       autofocus>
+                       autofocus />
 
                 <button type="submit"
                         class="btn btn-primary">
@@ -19,6 +17,13 @@
             <div class="mt-2">
                 <ValidationMessage For="(() => model.Text)" />
             </div>
+
+            @if (_context.IsModified() && model.Text.Length > 2)
+            {
+                <div class="form-text text-warning">
+                    You have unsaved changes.
+                </div>
+            }
 
         </EditForm>
 
@@ -31,6 +36,12 @@
 
 @code {
     private AddTodoItem model = new();
+    private EditContext _context = null!;
+
+    protected override void OnInitialized()
+    {
+        _context = new EditContext(model);
+    }
 
     [Parameter]
     public EventCallback<string> OnAdd { get; set; }
